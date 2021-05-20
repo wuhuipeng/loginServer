@@ -1,0 +1,12 @@
+{
+  "@class": "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId": "^(https|imaps|http)://(127.0.0.1|localhost).*",
+  "name": "包河区经济大脑",
+  "id": 1002,
+  "description": "包河区经济大脑登录主题",
+  "evaluationOrder": 1000,
+  "theme":"class",
+  "attributeReleasePolicy" : {
+    "@class": "org.apereo.cas.services.ReturnAllAttributeReleasePolicy"
+  }
+}

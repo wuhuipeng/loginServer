@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        ctxPath = /*[[@{/}]]*/ '';
+        /*]]>*/
+    </script>
+
+    <style>
+        .help-block{
+            display: block;
+            position: absolute;
+            margin-top: -25px;
+            margin-left: 65%;
+        }
+
+        .form-control-feedback{
+            top: 4px !important;
+        }
+
+        #form1 .has-success .form-control-feedback{
+            display: none;
+        }
+
+        #form2 .has-success .form-control-feedback{
+            display: none;
+        }
+
+        #yzm .form-control-feedback{
+            top: 8px !important;
+            right:33%;
+        }
+
+        #sjyzm .form-control-feedback{
+            top: 8px !important;
+        }
+
+        #yzm .help-block{
+            margin-top: -35px;
+            margin-left: 45%;
+        }
+
+        #sjyzm .help-block{
+            margin-top: -22px;
+            margin-left: 68%;
+        }
+    </style>
+</head>
+<body>
+<div class="login">
+    <div class="title">
+     </div>
+
+    <div class="login-box">
+        <div class="login-box-margin" id="login-box-margin">
+            <div class="login-tabname">&nbsp;
+                <a href="javascript:;" class="active">用户密码登录</a>
+                <a href="javascript:;">手机号登录</a>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "@class": "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId": "^(https|imaps|http)://(127.0.0.1|localhost).*",
+  "name": "手机号登录主题",
+  "id": 1001,
+  "description": "this is a localhost service",
+  "evaluationOrder": 1001,
+  "theme":"black",
+  "attributeReleasePolicy" : {
+    "@class": "org.apereo.cas.services.ReturnAllAttributeReleasePolicy"
+  }
+}
