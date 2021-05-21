@@ -200,6 +200,17 @@
                     <artifactId>cas-server-support-generic</artifactId>
                     <version>${cas.version}</version>
                 </dependency>
+
+                <dependency>
+                    <groupId>org.apereo.cas</groupId>
+                    <artifactId>cas-server-core-util-api</artifactId>
+                    <version>5.3.16</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apereo.cas</groupId>
+                    <artifactId>cas-server-core-web-api</artifactId>
+                    <version>5.3.16</version>
+                </dependency>
             </dependencies>
 
         </profile>

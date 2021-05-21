@@ -17,6 +17,9 @@ public class RememberMeUsernamePasswordCaptchaCredential  extends RememberMeUser
     @Size(min=5,max=5,message="require captcha")
     private String captcha;
 
+    public RememberMeUsernamePasswordCaptchaCredential(String captcha) {
+    }
+
     public String getCaptcha() {
         return captcha;
     }
@@ -25,6 +28,10 @@ public class RememberMeUsernamePasswordCaptchaCredential  extends RememberMeUser
         this.captcha = captcha;
     }
 
+    public RememberMeUsernamePasswordCaptchaCredential(boolean rememberMe, String captcha) {
+        super(rememberMe);
+        this.captcha = captcha;
+    }
 
     @Override
     public int hashCode() {
