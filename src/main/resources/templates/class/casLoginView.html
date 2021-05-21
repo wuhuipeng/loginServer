@@ -32,7 +32,7 @@
         .login-main .login-bottom {width:428px;background:#fff;border-radius:0 0 12px 12px;padding-bottom:53px;}
         .login-main .login-bottom .center {width:288px;margin:0 auto;padding-top:40px;padding-bottom:15px;position:relative;}
         .login-main .login-bottom .tip {clear:both;height:16px;line-height:16px;width:288px;margin:0 auto;}
-        body {background:url("[[@{/}]]images/loginbg.png")  0% 0% / cover no-repeat;position:static;font-size:12px;}
+        body {background:url("[[@{/}]]images/loginbg-comic.png")  0% 0% / cover no-repeat;position:static;font-size:12px;}
         input::-webkit-input-placeholder {color:#a6aebf;}
         input::-moz-placeholder {/* Mozilla Firefox 19+ */            color:#a6aebf;}
         input:-moz-placeholder {/* Mozilla Firefox 4 to 18 */            color:#a6aebf;}
@@ -52,12 +52,17 @@
             .login-main .login-bottom {width:360px !important;}
         }
     </style>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        ctxPath = /*[[@{/}]]*/ '';
+        /*]]>*/
+    </script>
 </head>
 <body>
 <div class="main-body">
     <div class="login-main">
         <div class="login-top">
-            <span>統一后台登录</span>
+            <span>统一登陆平台</span>
             <span class="bg1"></span>
             <span class="bg2"></span>
         </div>
@@ -76,7 +81,8 @@
 
                 <div id="validatePanel" class="item" style="width: 137px;">
                     <input type="text" name="captcha" placeholder="请输入验证码" maxlength="4">
-                    <img id="refreshCaptcha" class="validateImg"  th:src="@{/images/captcha.jpg}" >
+                    <img id="captcha" class="validateImg"   onclick="javascript:refreshCaptcha()" th:src="@{/getCaptcha}"  >
+
                 </div>
 
             </div>
@@ -93,55 +99,12 @@
 </div>
 <div class="footer">
  </div>
-<script  type="javascript" src="../../static/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<script>
-    layui.use(['form','jquery'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
-            layer = layui.layer;
-
-        // 登录过期的时候，跳出ifram框架
-        if (top.location != self.location) top.location = self.location;
-
-        $('.bind-password').on('click', function () {
-            if ($(this).hasClass('icon-5')) {
-                $(this).removeClass('icon-5');
-                $("input[name='password']").attr('type', 'password');
-            } else {
-                $(this).addClass('icon-5');
-                $("input[name='password']").attr('type', 'text');
-            }
-        });
-
-        $('.icon-nocheck').on('click', function () {
-            if ($(this).hasClass('icon-check')) {
-                $(this).removeClass('icon-check');
-            } else {
-                $(this).addClass('icon-check');
-            }
-        });
-
-        // 进行登录操作
-        form.on('submit(login)', function (data) {
-            data = data.field;
-            if (data.username == '') {
-                layer.msg('用户名不能为空');
-                return false;
-            }
-            if (data.password == '') {
-                layer.msg('密码不能为空');
-                return false;
-            }
-            if (data.captcha == '') {
-                layer.msg('验证码不能为空');
-                return false;
-            }
-            layer.msg('登录成功', function () {
-                window.location = '../index.html';
-            });
-            return false;
-        });
-    });
+<script type="text/javascript" th:src="@{#{webjars.jquerymin.js}}"></script>
+<script  type="javascript" th:src="@{/lib/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+<script  type="text/javascript" >
+    function refreshCaptcha(){
+        $("#captcha").attr("src", ctxPath + "getCaptcha?id=" + (new Date()).getTime() + '-' + Math.floor(Math.random() * 24));
+    }
 </script>
 </body>
 </html>
