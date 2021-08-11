@@ -31,7 +31,7 @@ public class CaptchaCredentialsAction extends AbstractNonInteractiveCredentialsA
     protected Credential constructCredentialsFromRequest(RequestContext requestContext) {
         try {
             final HttpServletRequest request = WebUtils.getHttpServletRequestFromExternalWebflowContext(requestContext);
-            RememberMeUsernamePasswordCaptchaCredential credentials = new RememberMeUsernamePasswordCaptchaCredential(false,request.getParameter("captcha"));
+            RememberMeUsernamePasswordCaptchaCredential credentials = new RememberMeUsernamePasswordCaptchaCredential(request.getParameter("captcha"));
             credentials.setUsername(request.getParameter("username"));
             credentials.setPassword(request.getParameter("password"));
             if (credentials != null) {

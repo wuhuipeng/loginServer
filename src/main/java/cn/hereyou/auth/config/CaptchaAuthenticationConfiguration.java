@@ -1,7 +1,8 @@
 package cn.hereyou.auth.config;
 
+
 import cn.hereyou.auth.action.CaptchaCredentialsAction;
-import cn.hereyou.auth.service.UserPasswordLoginHandler;
+import cn.hereyou.auth.service.CaptchaAuthenticationHandler;
 import org.apereo.cas.authentication.AuthenticationEventExecutionPlan;
 import org.apereo.cas.authentication.AuthenticationEventExecutionPlanConfigurer;
 import org.apereo.cas.authentication.AuthenticationHandler;
@@ -57,15 +58,15 @@ public class CaptchaAuthenticationConfiguration implements AuthenticationEventEx
      */
     @Bean
     public AuthenticationHandler captchaAuthenticationHandler() {
-        return new UserPasswordLoginHandler(UserPasswordLoginHandler.class.getSimpleName(),
+        return new CaptchaAuthenticationHandler(CaptchaAuthenticationHandler.class.getSimpleName(),
                 servicesManager, new DefaultPrincipalFactory(), 1);
     }
 
 
     @Override
     public void configureAuthenticationExecutionPlan(final AuthenticationEventExecutionPlan plan) {
-
         final AuthenticationHandler customAuthenticationHandler = captchaAuthenticationHandler();
         plan.registerAuthenticationHandler(customAuthenticationHandler);
-     }
+        logger.info("自定义认证[{}]加载完成！", customAuthenticationHandler.getName());
+    }
 }
