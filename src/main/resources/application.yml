@@ -1,0 +1,123 @@
+
+# 禁用静态账户,同时置空cas.authn.accept.users，以完全禁用静态验证。
+staticAuthentication: false
+cas:
+  httpWebRequest:
+    header:
+      # 允许使用iframe嵌套CAS登录页面
+      xframe: false
+    cors:
+      # 跨域cookie
+      allowCredentials: true
+      allowHeaders:
+        - '*'
+      allowMethods:
+        - '*'
+      allowOrigins:
+        - '*'
+      enabled: true
+      exposedHeaders:
+        - 'Set-Cookie'
+      maxAge: 3600
+  httpClient:
+    hostNameVerifier: NONE
+    allowLocalLogoutUrls: true
+    authorityValidationRegEx:
+    authorityValidationRegExCaseSensitive: false
+  audit:
+    # 启用jdbc审计日志(表名COM_AUDIT_TRAIL)，默认文件org.apereo.inspektr.audit.support.Slf4jLoggingAuditTrailManager
+    # 后期考虑基于IP及用户名限制登录重试
+    jdbc:
+      asynchronous: true
+      maxAgeDays: 180
+      # create、create-drop(默认)、update、validate
+      ddlAuto: update
+  adminPagesSecurity:
+    ip: 127.0.0.1
+  # 若使用http协议，以下属性改为false;注意https和http协议共存时，可能会导致session丢失
+  tgc:
+    secure: false
+  warningCookie:
+    secure: false
+  serviceRegistry:
+    initFromJson: true
+  # 启用自定义登录主题
+  theme:
+    defaultThemeName: class
+  logout:
+    # 配置允许登出后跳转到指定页面
+    followServiceRedirects: true
+    # 跳转到指定页面需要的参数名为 service
+    redirectParameter: service
+    confirmLogout: false
+    # 是否移除子系统的票据
+    removeDescendantTickets: true
+  authn:
+    # 静态密码
+    accept:
+      users: #casuser::Mellon
+    exceptions:
+      exceptions:
+        -  cn.hereyou.auth.exception.CaptchaErrorException
+     # 基于IP和用户名限制密码重试
+    throttle:
+      failure:
+        code: AUTHENTICATION_FAILED
+        rangeSeconds: 10
+        threshold: 5
+      schedule:
+        repeatInterval: PT30S
+        startDelay: PT10S
+      usernameParameter: username
+
+
+server:
+  compression:
+    enabled: true
+    mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain
+  connection-timeout: 20000
+  context-parameters:
+    isLog4jAutoInitializationDisabled: true
+  context-path: /loginServer
+  error:
+    include-stacktrace: ALWAYS
+  max-http-header-size: 2097152
+  port: 18888
+  session:
+    cookie:
+      http-only: true
+    timeout: 300
+    tracking-modes: COOKIE
+  ssl:
+    key-store: classpath:server.keystore
+    key-store-password: tomcat
+    key-password: tomcat
+    enabled: false
+  # undertow内置容器配置
+  undertow:
+    accesslog:
+      enabled: true
+      dir: logs
+    # 指定工作者线程的 I/0 线程数，默认为 2 或者 CPU 的个数
+    io-threads: 8
+    # 指定工作者线程个数，默认为 I/O 线程个数的 8 倍
+    worker-threads: 64
+    # 设置 HTTP POST 内容的最大长度，默认不做限制
+    max-http-post-size: 0
+  # tomcat内置容器配置
+  tomcat:
+    accesslog:
+      enabled: true
+      pattern: '%t %a "%r" %s (%D ms)'
+      suffix: .log
+    basedir: build/tomcat
+    max-http-post-size: 2097152
+    max-threads: 200
+    min-spare-threads: 10
+    port-header: X-Forwarded-Port
+    protocol-header: X-Forwarded-Proto
+    protocol-header-https-value: https
+    remote-ip-header: X-FORWARDED-FOR
+    uri-encoding: UTF-8
+  use-forward-headers: true
+

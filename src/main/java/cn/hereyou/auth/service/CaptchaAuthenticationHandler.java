@@ -33,13 +33,13 @@ public class CaptchaAuthenticationHandler extends AbstractPreAndPostProcessingAu
     protected AuthenticationHandlerExecutionResult doAuthentication(Credential credential) throws GeneralSecurityException, PreventedException {
         RememberMeUsernamePasswordCaptchaCredential usernamePasswordCredential = (RememberMeUsernamePasswordCaptchaCredential) credential;
         //密码用户校验逻辑
-        String requestCaptcha = usernamePasswordCredential.getId();
+        String requestCaptcha = usernamePasswordCredential.getCaptcha();
         RequestContextHolder.getRequestAttributes().getSessionMutex();
         Object attribute = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("captcha");
         String realCaptcha = attribute == null ? null : attribute.toString();
         final boolean correct = compareCaptcha(requestCaptcha, realCaptcha);
         if (!correct) {
-             throw new FailedLoginException("验证码错误");
+             throw new CaptchaErrorException("验证码错误");
         }
 
        //TODO
